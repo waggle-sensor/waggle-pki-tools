@@ -55,4 +55,6 @@ data:
   cert.pem: $(base64 "$certfile")
   key.pem: $(base64 "$keyfile")
 EOF
+
+    rm -f "$keyfile" "$csrfile" "$certfile"
 }
