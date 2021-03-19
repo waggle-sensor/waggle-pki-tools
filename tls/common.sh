@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CAKEYFILE="private/ca.key.pem"
-CACERTFILE="private/ca.cert.pem"
+CAKEYFILE="ca/cakey.pem"
+CACERTFILE="ca/cacert.pem"
 
 init_ca() {
     mkdir -p "$(dirname $CAKEYFILE)"
@@ -20,9 +20,9 @@ init_ca() {
 
 sign_credentials() {
     name="$1"
-    keyfile="private/$name.key.pem"
-    csrfile="private/$name.csr.pem"
-    certfile="private/$name.cert.pem"
+    keyfile="ca/$name.key.pem"
+    csrfile="ca/$name.csr.pem"
+    certfile="ca/$name.cert.pem"
 
     mkdir -p "$(dirname $keyfile)"
 
