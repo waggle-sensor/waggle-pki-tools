@@ -15,7 +15,7 @@ init_ca() {
     # create ca
     openssl req -x509 \
         -nodes -newkey rsa:4096 -keyout "$CAKEYFILE" -out "$CACERTFILE" \
-        -sha256 -days 3650 -subj "/CN=beekeeper"
+        -sha256 -days 36500 -subj "/CN=beekeeper"
 }
 
 sign_credentials() {
@@ -34,7 +34,7 @@ sign_credentials() {
     # sign request using ca
     openssl x509 -req \
         -in "$csrfile" -out "$certfile" \
-        -CAkey "$CAKEYFILE" -CA "$CACERTFILE" \
+        -CAkey "$CAKEYFILE" -CA "$CACERTFILE" -CAcreateserial \
         -sha256 -days 365
 
     # also create kuberenetes secret resource for immediate use
