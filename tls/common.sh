@@ -83,7 +83,7 @@ sign_wes_rabbitmq_credentials() {
 
     # create kuberenetes secret with key / cert
     mkdir -p secrets
-    secret_name="wes-rabbitmq-credentials"
+    secret_name="wes-beehive-rabbitmq-tls"
     cat > "secrets/${name}-${secret_name}.yaml" <<EOF
 apiVersion: v1
 kind: Secret
