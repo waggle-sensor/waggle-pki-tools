@@ -61,3 +61,39 @@ EOF
 
     rm -f "$keyfile" "$csrfile" "$certfile"
 }
+
+sign_wes_rabbitmq_credentials() {
+    name="$1"
+    keyfile="ca/$name.key.pem"
+    csrfile="ca/$name.csr.pem"
+    certfile="ca/$name.cert.pem"
+
+    mkdir -p "$(dirname $keyfile)"
+
+    # create signing request
+    openssl req -new \
+        -nodes -newkey rsa:4096 -keyout "$keyfile" -out "$csrfile" \
+        -subj "/CN=$name"
+
+    # sign request using ca
+    openssl x509 -req \
+        -in "$csrfile" -out "$certfile" \
+        -CAkey "$CAKEYFILE" -CA "$CACERTFILE" -CAcreateserial \
+        -sha256 -days 365
+
+    # create kuberenetes secret with key / cert
+    mkdir -p secrets
+    secret_name="wes-rabbitmq-credentials"
+    cat > "secrets/${name}-${secret_name}.yaml" <<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ${secret_name}
+type: Opaque
+data:
+  cert.pem: $(base64 "$certfile")
+  key.pem: $(base64 "$keyfile")
+EOF
+
+    rm -f "$keyfile" "$csrfile" "$certfile"
+}

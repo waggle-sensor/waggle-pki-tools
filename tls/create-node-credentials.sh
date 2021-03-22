@@ -3,5 +3,5 @@
 source "$(dirname "$0")/common.sh"
 
 for nodeID in $*; do
-    sign_credentials "node-$nodeID"
+    sign_wes_rabbitmq_credentials "node-$nodeID"
 done
