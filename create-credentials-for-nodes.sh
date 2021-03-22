@@ -11,13 +11,13 @@ for nodeID in $*; do
     mkdir -p credentials
 
     (
-    cat ssh/configmaps/beehive-ssh-ca.yaml
-    echo '---'
     cat tls/configmaps/beehive-ca-certificate.yaml
     echo '---'
-    cat "ssh/secrets/$name-wes-beehive-upload-ssh-key.yaml"
-    echo '---'
     cat "tls/secrets/$name-wes-beehive-rabbitmq-tls.yaml"
+    echo '---'
+    cat ssh/configmaps/beehive-ssh-ca.yaml
+    echo '---'
+    cat "ssh/secrets/$name-wes-beehive-upload-ssh-key.yaml"
     ) > "credentials/$name.yaml"
 
     echo "done"
