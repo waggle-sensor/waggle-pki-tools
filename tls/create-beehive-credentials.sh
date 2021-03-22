@@ -13,7 +13,9 @@ init_ca() {
             -sha256 -days 36500 -subj "/CN=beekeeper"
     fi
 
-    cat > $(dirname "$CACERTFILE")/beehive-ca-certificate.yaml <<EOF
+    # create configmap with ca certificate
+    mkdir -p configmaps
+    cat > configmaps/beehive-ca-certificate.yaml <<EOF
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -43,12 +45,8 @@ sign_credentials() {
         -CAkey "$CAKEYFILE" -CA "$CACERTFILE" -CAcreateserial \
         -sha256 -days 365
 
-    # also create kuberenetes secret resource for immediate use
-    # TODO(sean) think about whether this is primary thing we want to ship. it's a flexible 
-    # format which already includes the essentials, room to grow and is also immediately
-    # usable by kubernetes
+    # create kuberenetes secret with key / cert
     mkdir -p secrets
-
     secret_name="${name}-tls-secret"
     cat > "secrets/${secret_name}.yaml" <<EOF
 apiVersion: v1
@@ -57,7 +55,6 @@ metadata:
   name: ${secret_name}
 type: Opaque
 data:
-  cacert.pem: $(base64 "$CACERTFILE")
   cert.pem: $(base64 "$certfile")
   key.pem: $(base64 "$keyfile")
 EOF
