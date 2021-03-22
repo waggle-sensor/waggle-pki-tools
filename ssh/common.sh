@@ -64,7 +64,7 @@ EOF
     rm -f "$keyfile" "$keyfile.pub" "$keyfile-cert.pub"
 }
 
-sign_node_credentials() {
+sign_upload_credentials() {
     name="$1"
     keyfile="ca/$name"
 
@@ -80,12 +80,12 @@ sign_node_credentials() {
 
     # create kuberenetes secret with key / cert
     mkdir -p secrets
-    secret_name="${name}-ssh-key"
+    secret_name="${name}-wes-beehive-upload-ssh-key"
     cat > "secrets/${secret_name}.yaml" <<EOF
 apiVersion: v1
 kind: Secret
 metadata:
-  name: ${secret_name}
+  name: wes-beehive-upload-ssh-key
 type: Opaque
 data:
   ssh-key: $(base64 "${keyfile}")

@@ -2,6 +2,6 @@
 
 source "$(dirname "$0")/common.sh"
 
-for nodeID in $*; do
-    sign_node_credentials "node-${nodeID}"
+for name in $*; do
+    sign_upload_credentials "$name"
 done
