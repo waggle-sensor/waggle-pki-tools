@@ -2,8 +2,18 @@
 
 This repo contains tools for quickly generating credentials for both beehive and nodes. The primary tools are:
 
-* `create-credentials-for-beehive.sh`. This will setup a CA if one doesn't exist and create a `credentials/beehive.yaml` file containing Kubernetes resources for the TLS / SSH CAs and credentials for RabbitMQ and upload services.
-* `create-credentials-for-nodes.sh nodeID`. This will setup a CA if one doesn't exist and create a `credentials/node-nodeID.yaml` file containing Kubernetes resources for the TLS / SSH CAs and credentials for the shovels and uploader.
+```sh
+./create-credentials-for-beehive.sh
+```
+
+This will setup a CA if one doesn't exist and create a `credentials/beehive.yaml` file containing Kubernetes resources for the TLS / SSH CAs and credentials for RabbitMQ and upload services.
+
+
+```sh
+./create-credentials-for-nodes.sh nodeID
+```
+
+This will setup a CA if one doesn't exist and create a `credentials/node-nodeID.yaml` file containing Kubernetes resources for the TLS / SSH CAs and credentials for the shovels and uploader.
 
 ## Important Files
 
