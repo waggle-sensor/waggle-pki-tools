@@ -18,4 +18,4 @@ This will setup a CA if one doesn't exist and create a `credentials/node-nodeID.
 ## Important Files
 
 * `(tls|ssh)/ca/*`. All critical files related to the TLS / SSH CA. These _must be kept private_ and can be backed up and can be restored as needed.
-* `credentials/*.yaml`. These are "Kubernetes ready" beehive and node credential bundles. These _must be kept private_.
+* `credentials/*.yaml`. These are beehive and node credential bundles. These _must be kept private_. These are "Kubernetes ready" so that a single `kubectl apply -f x.yaml` will bootstrap all credentials required by the target.
