@@ -69,7 +69,7 @@ type: Opaque
 data:
   ssh-host-key: $(b64 "${keyfile}")
   ssh-host-key.pub: $(b64 "${keyfile}.pub")
-  ssh-host-key-cert.pub: $(base64 "${keyfile}-cert.pub")
+  ssh-host-key-cert.pub: $(b64 "${keyfile}-cert.pub")
 EOF
 
     rm -f "$keyfile" "$keyfile.pub" "$keyfile-cert.pub"
