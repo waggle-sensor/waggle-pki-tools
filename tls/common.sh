@@ -5,10 +5,14 @@ CACERTFILE="ca/cacert.pem"
 
 # detect correct base64 flags to use
 if echo | base64 -b 0 &> /dev/null; then
-  b64() { base64 -b 0 "$@" }
+  B64_FLAG="-b 0"
 else
-  b64() { base64 -w 0 "$@" }
+  B64_FLAG="-w 0"
 fi
+
+b64() {
+  base64 "${B64_FLAG}" "$@"
+}
 
 init_ca() {
     mkdir -p "$(dirname $CAKEYFILE)"
