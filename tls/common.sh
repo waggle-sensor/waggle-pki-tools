@@ -3,6 +3,13 @@
 CAKEYFILE="ca/cakey.pem"
 CACERTFILE="ca/cacert.pem"
 
+# detect correct base64 flags to use
+if echo | base64 -b 0 &> /dev/null; then
+  b64() { base64 -b 0 "$@" }
+else
+  b64() { base64 -w 0 "$@" }
+fi
+
 init_ca() {
     mkdir -p "$(dirname $CAKEYFILE)"
 
@@ -55,8 +62,8 @@ metadata:
   name: ${secret_name}
 type: Opaque
 data:
-  cert.pem: $(base64 "$certfile")
-  key.pem: $(base64 "$keyfile")
+  cert.pem: $(b64 "$certfile")
+  key.pem: $(b64 "$keyfile")
 EOF
 
     rm -f "$keyfile" "$csrfile" "$certfile"
@@ -91,8 +98,8 @@ metadata:
   name: ${secret_name}
 type: Opaque
 data:
-  cert.pem: $(base64 "$certfile")
-  key.pem: $(base64 "$keyfile")
+  cert.pem: $(b64 "$certfile")
+  key.pem: $(b64 "$keyfile")
 EOF
 
     rm -f "$keyfile" "$csrfile" "$certfile"
