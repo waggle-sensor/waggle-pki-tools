@@ -3,6 +3,8 @@
 (cd tls && ./create-beehive-credentials.sh)
 (cd ssh && ./create-beehive-credentials.sh)
 
+mkdir -p credentials
+
 (
 cat tls/configmaps/beehive-ca-certificate.yaml
 echo '---'
