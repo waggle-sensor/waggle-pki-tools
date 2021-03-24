@@ -1,8 +1,5 @@
 #!/bin/bash
 
-CAKEYFILE="ca/cakey.pem"
-CACERTFILE="ca/cacert.pem"
-
 # detect correct base64 flags to use
 if echo | base64 -b 0 &> /dev/null; then
   B64_FLAG="-b 0"
@@ -13,6 +10,9 @@ fi
 b64() {
   base64 "${B64_FLAG}" "$@"
 }
+
+CAKEYFILE="ca/cakey.pem"
+CACERTFILE="ca/cacert.pem"
 
 init_ca() {
     mkdir -p "$(dirname $CAKEYFILE)"

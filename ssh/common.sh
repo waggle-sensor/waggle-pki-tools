@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# detect correct base64 flags to use
+if echo | base64 -b 0 &> /dev/null; then
+  B64_FLAG="-b 0"
+else
+  B64_FLAG="-w 0"
+fi
+
+b64() {
+  base64 "${B64_FLAG}" "$@"
+}
+
 CAKEYFILE="ca/ca"
 
 init_ca() {
@@ -56,8 +67,8 @@ metadata:
   name: ${secret_name}
 type: Opaque
 data:
-  ssh-host-key: $(base64 "${keyfile}")
-  ssh-host-key.pub: $(base64 "${keyfile}.pub")
+  ssh-host-key: $(b64 "${keyfile}")
+  ssh-host-key.pub: $(b64 "${keyfile}.pub")
   ssh-host-key-cert.pub: $(base64 "${keyfile}-cert.pub")
 EOF
 
@@ -88,9 +99,9 @@ metadata:
   name: wes-beehive-upload-ssh-key
 type: Opaque
 data:
-  ssh-key: $(base64 "${keyfile}")
-  ssh-key.pub: $(base64 "${keyfile}.pub")
-  ssh-key-cert.pub: $(base64 "${keyfile}-cert.pub")
+  ssh-key: $(b64 "${keyfile}")
+  ssh-key.pub: $(b64 "${keyfile}.pub")
+  ssh-key-cert.pub: $(b64 "${keyfile}-cert.pub")
 EOF
 
     rm -f "$keyfile" "$keyfile.pub" "$keyfile-cert.pub"
