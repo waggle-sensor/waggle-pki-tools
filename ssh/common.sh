@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # detect correct base64 flags to use
 if echo | base64 -b 0 &> /dev/null; then

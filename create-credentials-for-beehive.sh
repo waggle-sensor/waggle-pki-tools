@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 (cd tls && ./create-beehive-credentials.sh)
 (cd ssh && ./create-beehive-credentials.sh)
