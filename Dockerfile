@@ -1,7 +1,7 @@
 
-# docker build -t waggle-sensor/waggle-pki-tools .
+# docker build -t waggle/waggle-pki-tools .
 
-# docker run -ti -v `pwd`:/workdir waggle-sensor/waggle-pki-tools bash
+# docker run -ti -v `pwd`:/workdir waggle/waggle-pki-tools bash
 
 
 FROM ubuntu:20.04
