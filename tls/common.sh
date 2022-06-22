@@ -1,4 +1,5 @@
-#!/bin/bash -e
+#!/bin/bash
+set -e
 
 # detect correct base64 flags to use
 if echo | base64 -b 0 &> /dev/null; then
@@ -21,7 +22,7 @@ init_ca() {
     if ! test -e "$CAKEYFILE"; then
         openssl req -x509 \
             -nodes -newkey rsa:4096 -keyout "$CAKEYFILE" -out "$CACERTFILE" \
-            -sha256 -days 36500 -subj "/CN=beekeeper"
+            -sha256 -days 3650 -subj "/CN=beekeeper"
     fi
 
     # create configmap with ca certificate

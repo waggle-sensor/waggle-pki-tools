@@ -1,4 +1,5 @@
-#!/bin/bash -e
+#!/bin/bash
+set -e
 
 # detect correct base64 flags to use
 if echo | base64 -b 0 &> /dev/null; then
@@ -24,7 +25,7 @@ init_ca() {
           -t rsa-sha2-256 \
           -I "beehive ssh ca" \
           -n "beehive" \
-          -V "-5m:+36500d" \
+          -V "-5m:+3650d" \
           -h \
           "$CAKEYFILE"
     fi
