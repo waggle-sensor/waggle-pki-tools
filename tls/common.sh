@@ -49,11 +49,12 @@ EOF
 
 sign_credentials() {
     name="$1"
-    keyfile="ca/$name/key.pem"
-    csrfile="ca/$name/csr.pem"
-    certfile="ca/$name/cert.pem"
+    keyfile="credentials/server/$name/key.pem"
+    csrfile="credentials/server/$name/csr.pem"
+    certfile="credentials/server/$name/cert.pem"
 
     mkdir -p "$(dirname $keyfile)"
+    chmod 700 "credentials"
 
     # create signing request
     openssl req -new \
@@ -84,11 +85,12 @@ EOF
 
 sign_wes_rabbitmq_credentials() {
     name="$1"
-    keyfile="ca/$name/key.pem"
-    csrfile="ca/$name/csr.pem"
-    certfile="ca/$name/cert.pem"
+    keyfile="credentials/client/$name/key.pem"
+    csrfile="credentials/client/$name/csr.pem"
+    certfile="credentials/client/$name/cert.pem"
 
     mkdir -p "$(dirname $keyfile)"
+    chmod 700 "credentials"
 
     # create signing request
     openssl req -new \

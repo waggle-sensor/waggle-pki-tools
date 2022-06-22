@@ -48,9 +48,11 @@ EOF
 
 sign_host_credentials() {
     name="$1"
-    keyfile="ca/$name"
+    keyfile="credentials/server/$name/ssh-host-key"
 
     mkdir -p "$(dirname $keyfile)"
+    chmod 700 "credentials"
+
     ssh-keygen -N "" -f "$keyfile"
     chmod 600 "$keyfile"
     ssh-keygen \
@@ -80,9 +82,11 @@ EOF
 
 sign_upload_credentials() {
     name="$1"
-    keyfile="ca/$name"
+    keyfile="credentials/client/$name/ssh-key"
+    chmod 700 "credentials"
 
     mkdir -p "$(dirname $keyfile)"
+
     ssh-keygen -N "" -f "$keyfile"
     chmod 600 "$keyfile"
     ssh-keygen \
