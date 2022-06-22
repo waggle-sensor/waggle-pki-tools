@@ -52,6 +52,7 @@ sign_host_credentials() {
 
     mkdir -p "$(dirname $keyfile)"
     ssh-keygen -N "" -f "$keyfile"
+    chmod 600 "$keyfile"
     ssh-keygen \
         -s "$CAKEYFILE" \
         -t rsa-sha2-256 \
@@ -75,8 +76,6 @@ data:
   ssh-host-key.pub: $(b64 "${keyfile}.pub")
   ssh-host-key-cert.pub: $(b64 "${keyfile}-cert.pub")
 EOF
-
-    rm -f "$keyfile" "$keyfile.pub" "$keyfile-cert.pub"
 }
 
 sign_upload_credentials() {
@@ -85,6 +84,7 @@ sign_upload_credentials() {
 
     mkdir -p "$(dirname $keyfile)"
     ssh-keygen -N "" -f "$keyfile"
+    chmod 600 "$keyfile"
     ssh-keygen \
         -s "$CAKEYFILE" \
         -t rsa-sha2-256 \
@@ -107,6 +107,4 @@ data:
   ssh-key.pub: $(b64 "${keyfile}.pub")
   ssh-key-cert.pub: $(b64 "${keyfile}-cert.pub")
 EOF
-
-    rm -f "$keyfile" "$keyfile.pub" "$keyfile-cert.pub"
 }

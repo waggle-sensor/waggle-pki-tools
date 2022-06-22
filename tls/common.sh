@@ -49,9 +49,9 @@ EOF
 
 sign_credentials() {
     name="$1"
-    keyfile="ca/$name.key.pem"
-    csrfile="ca/$name.csr.pem"
-    certfile="ca/$name.cert.pem"
+    keyfile="ca/$name/key.pem"
+    csrfile="ca/$name/csr.pem"
+    certfile="ca/$name/cert.pem"
 
     mkdir -p "$(dirname $keyfile)"
 
@@ -59,6 +59,7 @@ sign_credentials() {
     openssl req -new \
         -nodes -newkey rsa:4096 -keyout "$keyfile" -out "$csrfile" \
         -subj "/CN=$name"
+    chmod 600 "$keyfile"
 
     # sign request using ca
     openssl x509 -req \
@@ -79,15 +80,13 @@ data:
   cert.pem: $(b64 "$certfile")
   key.pem: $(b64 "$keyfile")
 EOF
-
-    rm -f "$keyfile" "$csrfile" "$certfile"
 }
 
 sign_wes_rabbitmq_credentials() {
     name="$1"
-    keyfile="ca/$name.key.pem"
-    csrfile="ca/$name.csr.pem"
-    certfile="ca/$name.cert.pem"
+    keyfile="ca/$name/key.pem"
+    csrfile="ca/$name/csr.pem"
+    certfile="ca/$name/cert.pem"
 
     mkdir -p "$(dirname $keyfile)"
 
@@ -95,6 +94,7 @@ sign_wes_rabbitmq_credentials() {
     openssl req -new \
         -nodes -newkey rsa:4096 -keyout "$keyfile" -out "$csrfile" \
         -subj "/CN=$name"
+    chmod 600 "$keyfile"
 
     # sign request using ca
     openssl x509 -req \
@@ -115,6 +115,4 @@ data:
   cert.pem: $(b64 "$certfile")
   key.pem: $(b64 "$keyfile")
 EOF
-
-    rm -f "$keyfile" "$csrfile" "$certfile"
 }

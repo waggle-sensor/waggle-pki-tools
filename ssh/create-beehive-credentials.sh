@@ -3,4 +3,4 @@
 source "$(dirname "$0")/common.sh"
 
 init_ca
-sign_host_credentials beehive-upload-server
+sign_host_credentials upload-server
