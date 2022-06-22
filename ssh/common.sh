@@ -16,6 +16,7 @@ CAKEYFILE="ca/ca"
 
 init_ca() {
     mkdir -p "$(dirname $CAKEYFILE)"
+    chmod 700 "$(dirname $CAKEYFILE)"
 
     # create ca key / cert if key doesn't exist
     if ! test -e "$CAKEYFILE"; then
@@ -29,6 +30,8 @@ init_ca() {
           -h \
           "$CAKEYFILE"
     fi
+
+    chmod 600 "$CAKEYFILE"
 
     # create configmap with ca certificate
     mkdir -p configmaps

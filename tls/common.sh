@@ -17,13 +17,22 @@ CACERTFILE="ca/cacert.pem"
 
 init_ca() {
     mkdir -p "$(dirname $CAKEYFILE)"
+    chmod 700 "$(dirname $CAKEYFILE)"
 
     # create ca key / cert if key doesn't exist
     if ! test -e "$CAKEYFILE"; then
-        openssl req -x509 \
-            -nodes -newkey rsa:4096 -keyout "$CAKEYFILE" -out "$CACERTFILE" \
-            -sha256 -days 3650 -subj "/CN=beekeeper"
+        openssl req \
+            -x509 \
+            -nodes \
+            -newkey rsa:4096 \
+            -keyout "$CAKEYFILE" \
+            -out "$CACERTFILE" \
+            -sha256 \
+            -days 3650 \
+            -subj "/CN=beekeeper"
     fi
+
+    chmod 600 "$CAKEYFILE"
 
     # create configmap with ca certificate
     mkdir -p configmaps

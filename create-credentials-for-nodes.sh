@@ -1,4 +1,5 @@
-#!/bin/bash -e
+#!/bin/bash
+set -e
 
 for nodeID in $*; do
     name="node-$nodeID"
@@ -9,6 +10,7 @@ for nodeID in $*; do
     (cd ssh; ./create-node-credentials.sh "$name")
     
     mkdir -p credentials
+    chmod 700 credentials
 
     (
     cat tls/configmaps/beehive-ca-certificate.yaml
@@ -19,6 +21,8 @@ for nodeID in $*; do
     echo '---'
     cat "ssh/secrets/$name-wes-beehive-upload-ssh-key.yaml"
     ) > "credentials/$name.yaml"
+
+    chmod 600 "credentials/$name.yaml"
 
     echo "done"
 done
