@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+cd $(dirname "${0}")
+
 for nodeID in $*; do
     name="node-$nodeID"
 

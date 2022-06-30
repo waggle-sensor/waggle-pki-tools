@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+cd $(dirname "${0}")
+
 (cd tls && ./create-beehive-credentials.sh)
 (cd ssh && ./create-beehive-credentials.sh)
 
