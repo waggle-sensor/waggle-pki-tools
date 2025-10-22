@@ -3,13 +3,13 @@ set -e
 
 # detect correct base64 flags to use
 if echo | base64 -b 0 &> /dev/null; then
-  B64_FLAG="-b 0"
+  B64_FLAG="-b 0 -i"
 else
   B64_FLAG="-w 0"
 fi
 
 b64() {
-  base64 "${B64_FLAG}" "$@"
+  base64 ${B64_FLAG} "$@"
 }
 
 CAKEYFILE="ca/ca"
