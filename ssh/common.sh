@@ -13,6 +13,7 @@ b64() {
 }
 
 CAKEYFILE="ca/ca"
+keytype="rsa-sha2-256"
 
 init_ca() {
     mkdir -p "$(dirname $CAKEYFILE)"
@@ -20,10 +21,10 @@ init_ca() {
 
     # create ca key / cert if key doesn't exist
     if ! test -e "$CAKEYFILE"; then
-      ssh-keygen -N "" -f "$CAKEYFILE"
+      ssh-keygen -t $keytype -N "" -f "$CAKEYFILE"
       ssh-keygen \
           -s "$CAKEYFILE" \
-          -t rsa-sha2-256 \
+          -t $keytype \
           -I "beehive ssh ca" \
           -n "beehive" \
           -V "-5m:+3650d" \
@@ -53,11 +54,11 @@ sign_host_credentials() {
     mkdir -p "$(dirname $keyfile)"
     chmod 700 "credentials"
 
-    ssh-keygen -N "" -f "$keyfile"
+    ssh-keygen -t $keytype -N "" -f "$keyfile"
     chmod 600 "$keyfile"
     ssh-keygen \
         -s "$CAKEYFILE" \
-        -t rsa-sha2-256 \
+        -t $keytype \
         -I "$name ssh host key" \
         -n "$name" \
         -V "-5m:+365d" \
@@ -87,11 +88,11 @@ sign_upload_credentials() {
 
     mkdir -p "$(dirname $keyfile)"
 
-    ssh-keygen -N "" -f "$keyfile"
+    ssh-keygen -t $keytype -N "" -f "$keyfile"
     chmod 600 "$keyfile"
     ssh-keygen \
         -s "$CAKEYFILE" \
-        -t rsa-sha2-256 \
+        -t $keytype \
         -I "$name ssh host key" \
         -n "$name" \
         -V "-5m:+365d" \
